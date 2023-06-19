@@ -1,7 +1,30 @@
+'use client'
+
 import Image from 'next/image'
 import styles from './page.module.css'
-
+import { getUser } from '../../controllers/usuarios'
+import { useEffect, useState } from 'react'
 export default function Home() {
+  const [user, setUser] = useState({})
+
+
+
+
+  useEffect(() => {
+    getUser().then((res) => {
+      const dataRenderTables = res.map((item) => {
+          return {
+              id: item.id,
+              Nombre: item.Nombre,
+              Correo: item.Correo,
+              Area: item.Area,
+              EsAdmin: item.EsAdmin,
+          };
+      });
+      setUser(dataRenderTables);
+      console.log(dataRenderTables);
+  });
+  }, [])
   return (
     <main className={styles.main}>
       <div className={styles.description}>
